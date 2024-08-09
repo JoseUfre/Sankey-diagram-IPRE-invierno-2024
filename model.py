@@ -2,14 +2,16 @@ import csv
 import param as p
 import pandas as pd
 import plotly.graph_objects as go
+import os
 
 
 class Model:
     def __init__(self, data):
-        self.data = data
+        self.data = p.path(data)
         self.cp = None
         self.pci = p.pci
-        self.current = p.I
+        self.current = None
+        self.area = p.Area
         self.m_in = p.m_in
         self.df_list = list()
         self.df = None
@@ -36,10 +38,13 @@ class Model:
                     self.df_list.append(float_list) # Converting strings into floats
                 except:
                     pass
-        self.df = pd.DataFrame(self.df_list, columns=["T", "Cell Voltage", "Outflow (ml/min)", "Mass outflow (kg/s)", "Mass outflow (ug/s)"])
+        self.df = pd.DataFrame(self.df_list, columns=["T", "Cell Voltage", "Current density (A/cm2)", "Volume flow (ml/min)", "Mass outflow (ug/s)"])
+        self.df["Mass outflow (ug/s)"] = self.df["Mass outflow (ug/s)"] * 1e-9 # Converting from ug/s to kg/s
+        print(self.df)
         self.T = self.df["T"].mean()
         self.V = self.df["Cell Voltage"].mean()
-        self.m_out = self.df["Mass outflow (kg/s)"].mean()
+        self.m_out = self.df["Mass outflow (ug/s)"].mean()
+        self.current = self.df["Current density (A/cm2)"].mean()
     
     def anode_off_gas_cp(self):
         cp_n2 = p.cp(self.T + 273.15, "nitrogen")
@@ -92,8 +97,7 @@ class Model:
 
 
 if __name__ == "__main__":
-    model = Model("Outflow_2.csv")
-    print(model.amb_loses)
+    model = Model("Outflow_3.csv")
     print(f"Cp del gas de escape: {model.cp}")
     print(f"Eficiencia: {model.eficiency}")
     model.graphic()

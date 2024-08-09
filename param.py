@@ -1,8 +1,10 @@
 # Parámetros del modelo
+import os
 
+path = None
 pci = 18610 # kJ/kg
 m_in = 5.475*10**(-7)  # en kg/s (45 ml/min)
-I = 10 #A
+Area = 1 # cm2
 T_inf = 20 # °C
 
 
@@ -14,5 +16,9 @@ def cp(T, esp): #Función que determina el poder calorífico de un gas en funci�
     elif esp == "nitrogen":
         cp = 28.90 + -0.1571*pow(10, -2)*T + 0.8081*pow(10, -5)*T**2 + -2.873*pow(10, -9)*T**3
     return cp
+
+def path(data_sheet):
+    p = os.path.join("Data sheets", data_sheet)
+    return p
 
 
