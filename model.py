@@ -40,7 +40,6 @@ class Model:
                     pass
         self.df = pd.DataFrame(self.df_list, columns=["T", "Cell Voltage", "Current density (A/cm2)", "Volume flow (ml/min)", "Mass outflow (ug/s)"])
         self.df["Mass outflow (ug/s)"] = self.df["Mass outflow (ug/s)"] * 1e-9 # Converting from ug/s to kg/s
-        print(self.df)
         self.T = self.df["T"].mean()
         self.V = self.df["Cell Voltage"].mean()
         self.m_out = self.df["Mass outflow (ug/s)"].mean()
@@ -76,7 +75,7 @@ class Model:
         target = [1, 2, 3],
         value = [self.e_suply, self.ee, self.amb_loses]
         ))])
-        fig.update_layout(title_text="Sankey model", font_size=15)
+        fig.update_layout(title_text="Sankey model", font_size=20)
         color_for_nodes = ["green", "yellow", "red", "violet" ]
         fig.update_traces(node_color=color_for_nodes)
         # Añadir eficiencia en una esquina
@@ -98,6 +97,5 @@ class Model:
 
 if __name__ == "__main__":
     model = Model("Outflow_3.csv")
-    print(f"Cp del gas de escape: {model.cp}")
-    print(f"Eficiencia: {model.eficiency}")
+    print(model.T)
     model.graphic()

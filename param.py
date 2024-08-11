@@ -1,11 +1,15 @@
 # Parámetros del modelo
 import os
+from thermo.chemical import Chemical
 
-path = None
-pci = 18610 # kJ/kg
-m_in = 5.475*10**(-7)  # en kg/s (45 ml/min)
+
+pci = 18610 # kJ/kg ammonia lower heating value (PCI spanish initials)
+m_in = 1.5225*10**(-7)  # kg/s (45 ml/min), rho = P/RT (ammonia at 748 °C aprox) 
 Area = 1 # cm2
 T_inf = 20 # °C
+
+
+# NO MODIFICAR
 
 
 def cp(T, esp): #Función que determina el poder calorífico de un gas en funcióon de la temperatura (en K), en kJ/kmol*K
@@ -21,4 +25,8 @@ def path(data_sheet):
     p = os.path.join("Data sheets", data_sheet)
     return p
 
+def rho(T):
+    nh3 = Chemical("ammonia", T)
+    density = nh3.rho
+    return density
 
