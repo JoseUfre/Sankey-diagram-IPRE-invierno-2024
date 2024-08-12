@@ -1,5 +1,5 @@
 import csv
-import param as p
+import parameters as p
 import pandas as pd
 import plotly.graph_objects as go
 import os
