@@ -97,5 +97,4 @@ class Model:
 
 if __name__ == "__main__":
     model = Model("Outflow_3.csv")
-    print(model.T)
     model.graphic()

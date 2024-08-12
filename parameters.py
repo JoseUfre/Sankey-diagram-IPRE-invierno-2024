@@ -1,6 +1,6 @@
 # Parámetros del modelo
 import os
-from thermo.chemical import Chemical
+
 
 
 pci = 18610 # kJ/kg ammonia lower heating value (PCI spanish initials)
@@ -25,8 +25,4 @@ def path(data_sheet):
     p = os.path.join("Data sheets", data_sheet)
     return p
 
-def rho(T):
-    nh3 = Chemical("ammonia", T)
-    density = nh3.rho
-    return density
 
