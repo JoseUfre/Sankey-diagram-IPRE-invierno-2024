@@ -1,7 +1,10 @@
 # Parámetros del modelo
 import os
+from thermo.chemical import Chemical
 
 
+nh3 = Chemical("Ammonia", T=(273.15 + 748), P = 101325)
+rho_nh3 = nh3.rho
 
 pci = 18610 # kJ/kg ammonia lower heating value (PCI spanish initials)
 m_in = 1.5225*10**(-7)  # kg/s (45 ml/min), rho = P/RT (ammonia at 748 °C aprox) 
@@ -25,4 +28,7 @@ def path(data_sheet):
     p = os.path.join("Data sheets", data_sheet)
     return p
 
+def convertion(m_in):
+    m_in = m_in*(1/60000000)*rho_nh3
+    return m_in
 
