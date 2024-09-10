@@ -93,7 +93,7 @@ class Model:
                 font=dict(size=26.5, family="Courier New, monospace", color="black"),
                 subtitle=dict(
                 text="Sankey diagram to visualise the energy flow in a SOFC operating with ammonia ",
-                font=dict(color="gray", size=14 )),
+                font=dict(color="gray", size=14 ))
             ),
             font=dict(size=16, family="Arial"),  
             plot_bgcolor='rgba(255,255,255,0)',  
