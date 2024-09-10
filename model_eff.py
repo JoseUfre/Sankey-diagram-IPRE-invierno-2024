@@ -33,6 +33,14 @@ class Model:
         self.efficiency_list = list()
         self.m_in_list = None
         self.V_list = list()
+        # Lists by fuel inlet
+        self.v_30 = list()
+        self.v_80 = list()
+        self.v_130 = list()
+        # List of eff by fuel inlet
+        self.e_30 = list()
+        self.e_80 = list()
+        self.e_130 = list()
         # Incializo el modelo
         self.read_csv()
         self.anode_off_gas_cp()
@@ -79,25 +87,31 @@ class Model:
         for n in range(len(self.df)):
             m_in = self.df.iloc[n]["J_fuel (kg/s)"]
             V = self.df.iloc[n]["Cell Voltage"]
-            self.V_list.append(V.item())
             e_suply = m_in*self.pci*1000
             electric_e = V *self.current
             eff = round((electric_e/e_suply)*100,1)
-            self.efficiency_list.append(eff.item())
-        print(self.efficiency_list)
-        print(self.m_in_list)
-        print(self.V_list)
+            if m_in == 1.0162271619807454e-07:
+                self.v_30.append(V)
+                self.e_30.append(eff)
+            elif m_in == 2.7099390986153215e-07:
+                self.v_80.append(V)
+                self.e_80.append(eff)
+            elif m_in == 4.403651035249897e-07:
+                self.v_130.append(V)
+                self.e_130.append(eff)
     
     def graphic(self):
         fig, ax1 = plt.subplots()
-        ax1.plot(self.m_in_list, self.efficiency_list )
-        plt.xlabel("Ammonia inlet (ml/min)")
+        ax1.plot(self.v_30, self.e_30, label = "30 ml/min")
+        ax1.plot(self.v_80, self.e_80, label = "80 ml/min")
+        ax1.plot(self.v_130, self.e_130, label = "130 ml/min")
+        plt.xlabel("Cell Voltage (V)")
         plt.ylabel("Cell efficiency (%)")
-        plt.title("SOFC efficiency varying ammonia suply")
+        plt.title("SOFC efficiency when varying ammonia suply")
 
         # ax2 = ax1.twinx()
         # ax2.plot(self.m_in_list, self.V_list)
-
+        plt.legend()
         plt.show()
 
 

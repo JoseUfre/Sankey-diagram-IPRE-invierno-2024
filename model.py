@@ -58,39 +58,63 @@ class Model:
         self.amb_loses = self.m_out*self.cp*(self.T - self.T_inf)*1000
         self.eficiency = (self.ee/self.e_suply) * 100
     
+    import plotly.graph_objects as go
+
     def graphic(self):
+        #7f7f7f
+    #AF7AC5
+        node_colors = ["#6DCC4E", "#F4D03F", "#FF5733", "#7f7f7f"]
+        
         fig = go.Figure(data=[go.Sankey(
-        valueformat = ".2f",
-        valuesuffix= " W",
-        node = dict(
-        pad = 15,
-        thickness = 20,
-        line = dict(color = "black", width = 0.5),
-        label = ["Energy Inlet", "Fuel cell", "Efective energy outlet", "Energy anode off gases"],
-        color = "blue"
-        ),
-        link = dict(
-        arrowlen = 40,
-        source = [0, 1, 1],
-        target = [1, 2, 3],
-        value = [self.e_suply, self.ee, self.amb_loses]
-        ))])
-        fig.update_layout(title_text="Sankey model", font_size=20)
-        color_for_nodes = ["green", "yellow", "red", "violet" ]
-        fig.update_traces(node_color=color_for_nodes)
-        # Añadir eficiencia en una esquina
-        fig.add_annotation(
-        x = 1, y = 1,
-        text=f"Efficiency: {self.eficiency:.1f}%",
-        showarrow=False,
-        font = dict(size=23, color = "black"),
-        xanchor = "right",
-        yanchor = "top",
-        bordercolor = "black",
-        borderwidth=2,
-        bgcolor = "lightgreen",
-        opacity=0.8
+            valueformat=".2f",
+            valuesuffix=" W",
+            node=dict(
+                pad=20,
+                thickness=30,
+                line=dict(color="black", width=1),
+                label=["Ammonia Energy Input", "Fuel Cell", "Effective Energy Outlet", "Energy lost in Exhaust Gases"],
+                x=[0.1, 0.5, 0.9, 0.78], 
+                y=[0.5, 0.5, 0.2, 0.8],
+                color=node_colors
+            ),
+            link=dict(
+                source=[0, 1, 1],  
+                target=[1, 2, 3], 
+                value=[self.e_suply, self.ee, self.amb_loses],  
+                color=["rgba(109,204,78,0.6)", "rgba(244,208,63,0.6)", "#7f7f7f"]  
+            )
+        )])
+
+        fig.update_layout(
+            title=dict(
+                text="<b> Energy Flow Sankey Diagram </B>",
+                x=0.5, 
+                xanchor="center",
+                font=dict(size=26.5, family="Courier New, monospace", color="black"),
+                subtitle=dict(
+                text="Sankey diagram to visualise the energy flow in a SOFC operating with ammonia ",
+                font=dict(color="gray", size=14 )),
+            ),
+            font=dict(size=16, family="Arial"),  
+            plot_bgcolor='rgba(255,255,255,0)',  
+            paper_bgcolor='rgba(245,245,245,1)',
+            font_family = "Arial",
+            font_size = 20
         )
+
+        fig.add_annotation(
+            x=1, y=1,
+            text=f" <b> Efficiency: {self.eficiency:.1f}% </b>",
+            showarrow=False,
+            font=dict(size=22, color="black", family="Courier New, monospace"),
+            xanchor="right",
+            yanchor="top",
+            bordercolor="black",
+            borderwidth=2,
+            bgcolor="lightblue",
+            opacity=0.9
+        )
+        
         fig.show()
 
 
