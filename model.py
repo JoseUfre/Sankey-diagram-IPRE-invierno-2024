@@ -86,7 +86,7 @@ class Model:
 
         fig.update_layout(
             title=dict(
-                text="<b> Energy Flow Sankey Diagram </B>",
+                text=f"<b> Energy Flow Sankey Diagram at {self.T} °C </B>",
                 x=0.5, 
                 xanchor="center",
                 font=dict(size=26.5, family="Courier New, monospace", color="black"),
