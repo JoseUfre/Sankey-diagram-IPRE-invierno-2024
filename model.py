@@ -61,8 +61,7 @@ class Model:
     import plotly.graph_objects as go
 
     def graphic(self):
-        #7f7f7f
-    #AF7AC5
+
         node_colors = ["#6DCC4E", "#F4D03F", "#FF5733", "#7f7f7f"]
         
         fig = go.Figure(data=[go.Sankey(
@@ -92,8 +91,8 @@ class Model:
                 xanchor="center",
                 font=dict(size=26.5, family="Courier New, monospace", color="black"),
                 subtitle=dict(
-                text="Sankey diagram to visualise the energy flow in a SOFC operating with ammonia ",
-                font=dict(color="gray", size=14 ))
+                    text="Sankey diagram to visualise the energy flow in a SOFC operating with ammonia ",
+                    font=dict(color="gray", size=14 ))
             ),
             font=dict(size=16, family="Arial"),  
             plot_bgcolor='rgba(255,255,255,0)',  
@@ -120,5 +119,5 @@ class Model:
 
 
 if __name__ == "__main__":
-    model = Model("Outflow_3.csv")
+    model = Model("Outflow_5.csv")
     model.graphic()
